@@ -137,7 +137,14 @@ public class XPath extends Spider {
     public String categoryContent(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             fetchRule();
-            String webUrl = categoryUrl(tid, pg, filter, extend);
+            String webUrl = "";
+            int pageCount = 0;
+            if (!tid.startsWith("@")) {
+                webUrl = categoryUrl(tid, pg, filter, extend);
+                pageCount = Integer.MAX_VALUE;
+            } else {
+                webUrl = categoryUrl2(tid.replace("@",""), pg, filter, extend);
+            }
             JSONArray videos = new JSONArray();
             JXDocument doc = JXDocument.create(fetch(webUrl));
             List<JXNode> vodNodes = doc.selN(rule.getCateVodNode());
@@ -167,7 +174,7 @@ public class XPath extends Spider {
             }
             JSONObject result = new JSONObject();
             result.put("page", pg);
-            result.put("pagecount", Integer.MAX_VALUE);
+            result.put("pagecount", pageCount);
             result.put("limit", 90);
             result.put("total", Integer.MAX_VALUE);
             result.put("list", videos);
