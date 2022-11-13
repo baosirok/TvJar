@@ -152,7 +152,9 @@ public class XPathMac extends XPath {
                                 videoUrlTmp = URLDecoder.decode(videoUrlTmp);
                             }
                         }
-						if (player.getString("from").contains("BYGA")) {
+						if (playerConfig.has(player.getString("from"))) {
+                        JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
+                        if (player.getString("from").contains("BYGA")) {
 							try {    
 								JSONObject headers = new JSONObject();
 								headers.put("Referer", " https://xmaomi.top/");
@@ -194,22 +196,21 @@ public class XPathMac extends XPath {
 											public void onResponse(String str) {
 												try {
 													String url = new String(Base64.decode(new JSONObject(str).getString("url").substring(8).getBytes(), 0));
-													result.put("url", url.substring(8, url.length() - 8));
+													videoUrlTmp=("url", url.substring(8, url.length() - 8));
 												} catch (JSONException e) {
 													e.printStackTrace();
 												}
 											}
 										});
-									result.put("header", headers.toString());
-									result.put("parse", 0);
-									result.put("playUrl", "");
+									
 
 								}
-								return result.toString();
+								
 								}
 							catch (Exception e) {
 								SpiderDebug.log(e);
 							}
+						}
 						}
                         videoUrl = videoUrlTmp;
                         break;
