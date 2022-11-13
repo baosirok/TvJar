@@ -6,24 +6,17 @@ import android.util.Base64;
 
 import com.github.catvod.crawler.SpiderDebug;
 import com.github.catvod.utils.Misc;
-import com.github.catvod.utils.okhttp.OKCallBack;
-import com.github.catvod.utils.okhttp.OkHttpUtil;
-import com.github.catvod.crawler.Spider;
-import org.json.JSONException;
-import org.json.JSONArray;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import java.net.URL;
+
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,10 +27,6 @@ public class XPathMac extends XPath {
     private boolean decodeVipFlag;
     // 播放器配置js
     private String playerConfigJs = "";
-    
-    private final Pattern urlt = Pattern.compile("\"url\": *\"([^\"]*)\",");
-    private final Pattern token = Pattern.compile("\"token\": *\"([^\"]*)\"");
-    private final Pattern vkey = Pattern.compile("\"vkey\": *\"([^\"]*)\",");
     // 播放器配置js取值正则
     private String playerConfigJsRegex = "[\\W|\\S|.]*?MacPlayerConfig.player_list[\\W|\\S|.]*?=([\\W|\\S|.]*?),MacPlayerConfig.downer_list";
     // 站点里播放源对应的真实官源
@@ -126,8 +115,6 @@ public class XPathMac extends XPath {
         }
         return result;
     }
-	
-
 
 
     @Override
@@ -157,66 +144,6 @@ public class XPathMac extends XPath {
                                 videoUrlTmp = URLDecoder.decode(videoUrlTmp);
                             }
                         }
-						if (playerConfig.has(player.getString("from"))) {
-                        JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
-                        if (player.getString("from").contains("BYGA")) {
-							try {    
-								JSONObject headers = new JSONObject();
-								headers.put("Referer", " https://xmaomi.top/");
-								headers.put("User-Agent", " Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36");
-								headers.put("Accept", " text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
-								headers.put("Accept-Language", " zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6");
-								headers.put("Accept-Encoding", " gzip, deflate");
-								JSONObject pCfg = playerConfigJs.getJSONObject("parse");
-								String jxurl = pCfg.getString("parse") + player.getString("url");
-								Document doc = Jsoup.parse(OkHttpUtil.string(jxurl, getHeaders(jxurl)));
-								Elements script = doc.select("body>script");
-								for (int j = 0; j < script.size(); j++) {
-									String Content = script.get(j).html().trim();
-									Matcher matcher = urlt.matcher(Content);
-									if (!matcher.find()) {
-										return "";
-									}
-									String urlt = matcher.group(1);
-									Matcher matcher1 = token.matcher(Content);
-									if (!matcher1.find()) {
-										return "";
-									}
-									String token = matcher1.group(1);
-									Matcher matcher2 = vkey.matcher(Content);
-									if (!matcher2.find()) {
-										return "";
-									}
-									String vkey = matcher2.group(1);
-									HashMap hashMap = new HashMap();
-									hashMap.put("token", token);
-									hashMap.put("url", urlt);
-									hashMap.put("vkey", vkey);
-									hashMap.put("sign", "smdyycc");
-									OkHttpUtil.post(OkHttpUtil.defaultClient(), "https://player.6080kan.cc/player/xinapi.php", hashMap, new OKCallBack.OKCallBackString() {
-											
-											protected void onFailure(Call call, Exception exc) {
-											}
-
-											public void onResponse(String str) {
-												try {
-													String url = new String(Base64.decode(new JSONObject(str).getString("url").substring(8).getBytes(), 0));
-													videoUrlTmp=("url", url.substring(8, url.length() - 8));
-												} catch (JSONException e) {
-													e.printStackTrace();
-												}
-											}
-										});
-									
-
-								}
-								
-								}
-							catch (Exception e) {
-								SpiderDebug.log(e);
-							}
-						}
-						}
                         videoUrl = videoUrlTmp;
                         break;
                     }
