@@ -23,9 +23,7 @@ import java.util.List;
 public class Bili2 extends Spider {
 
     protected JSONObject ext = null;
-  
-    private String cookies = ext.getJSONArray("cookie");
-    
+     
         public void init(Context context, String extend) {
         super.init(context, extend);
         try {
@@ -36,11 +34,17 @@ public class Bili2 extends Spider {
         }
     }
     
+    private String getCookie(String cookie) {
+        if (TextUtils.isEmpty(cookie)) return "buvid3=84B0395D-C9F2-C490-E92E-A09AB48FE26E71636infoc";
+        if (cookie.startsWith("http")) return OkHttpUtil.string(cookie).replace("\n", "");
+        return cookie;
+    }
+    
     protected HashMap<String, String> getHeaders(String url) {
         HashMap<String, String> 
         headers = new HashMap<>();
         headers.put("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36");
-        headers.put("cookie", cookies);
+        headers.put("cookie",getCookie(ext.getString("cookie"));
         headers.put("Referer", "https://api.bilibili.com");
         return headers;
     }
