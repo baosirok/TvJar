@@ -17,7 +17,6 @@ import org.seimicrawler.xpath.JXNode;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -134,20 +133,11 @@ public class XPath extends Spider {
         return rule.getCateUrl().replace("{cateId}", tid).replace("{catePg}", pg);
     }
 
-    protected String categoryUrl2(String tid, String pg, boolean filter, HashMap<String, String> extend) {
-        return rule.getCateUrl2().replace("{cateId}", tid).replace("{catePg}", pg);
-    }
-
     @Override
     public String categoryContent(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             fetchRule();
-            String webUrl = "";
-            if (!tid.startsWith("@")) {
-                webUrl = categoryUrl(tid, pg, filter, extend);
-            } else {
-                webUrl = categoryUrl2(tid.replace("@",""), pg, filter, extend);
-            }
+            String webUrl = categoryUrl(tid, pg, filter, extend);
             JSONArray videos = new JSONArray();
             JXDocument doc = JXDocument.create(fetch(webUrl));
             List<JXNode> vodNodes = doc.selN(rule.getCateVodNode());
@@ -175,15 +165,6 @@ public class XPath extends Spider {
                 v.put("vod_remarks", mark);
                 videos.put(v);
             }
-             if (tid.startsWith("@")){
-            JSONObject result = new JSONObject();
-            result.put("", pg);
-            result.put("", Integer.MAX_VALUE);
-            result.put("limit", 90);
-            result.put("total", Integer.MAX_VALUE);
-            result.put("list", videos);
-            return result.toString();
-            }else{
             JSONObject result = new JSONObject();
             result.put("page", pg);
             result.put("pagecount", Integer.MAX_VALUE);
@@ -191,8 +172,6 @@ public class XPath extends Spider {
             result.put("total", Integer.MAX_VALUE);
             result.put("list", videos);
             return result.toString();
-            }
-            
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
@@ -209,7 +188,6 @@ public class XPath extends Spider {
             fetchRule();
             String webUrl = rule.getDetailUrl().replace("{vid}", ids.get(0));
             String webContent = fetch(webUrl);
-            boolean epireverse = rule.getDetailEpiRevers();
             JXDocument doc = JXDocument.create(webContent);
             JXNode vodNode = doc.selNOne(rule.getDetailNode());
 
@@ -316,10 +294,6 @@ public class XPath extends Spider {
                 if (vodItems.size() == 0 && playFrom.size() > i) {
                     playFrom.set(i, "");
                 }
-                //选集列表反转
-                if(epireverse){
-                    Collections.reverse(vodItems);
-                }
                 playList.add(TextUtils.join("#", vodItems));
             }
             // 排除播放列表为空的播放源
@@ -363,7 +337,7 @@ public class XPath extends Spider {
             result.put("parse", 1);
             result.put("playUrl", "");
             if (!rule.getPlayUa().isEmpty()) {
-                result.put("header", rule.getPlayUa());
+                result.put("ua", rule.getPlayUa());
             }
             result.put("url", webUrl);
             return result.toString();
@@ -452,39 +426,22 @@ public class XPath extends Spider {
 
     @Override
     public boolean manualVideoCheck() {
-        boolean ManualSniff = rule.getManualSniff();
-        return ManualSniff;
+        return false;
     }
+
+    private String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv"};
 
     @Override
     public boolean isVideoFormat(String url) {
         url = url.toLowerCase();
-        String sniffW = rule.getSniffWord();
-        String filterW = rule.getFilterWord();
-        String[] videoFormatList = (".m3u8#.mp4#.flv#video/tos#.mp3#.m4a").split("#");
-        String[] videoFilterList = ("=http#.html").split("#");
-        
-        if (!sniffW.isEmpty() && !sniffW.equals("空")) {
-            videoFormatList = sniffW.split("#");
-        }
-        
-        if (!filterW.isEmpty() && !filterW.equals("空")) {
-            videoFilterList = filterW.split("#");
-        }
-        
-        if (url.contains("=http")||url.contains(".html")) {
+        if (url.contains("=http") || url.contains("=https") || url.contains("=https%3a%2f") || url.contains("=http%3a%2f")) {
             return false;
         }
-        for (String format : videoFormatList) { 
+        for (String format : videoFormatList) {
             if (url.contains(format)) {
-                for (String filter : videoFilterList) {
-                    if (url.contains(filter)) {
-                        return false;
-                    }
-                }
                 return true;
-            } 
-        } 
+            }
+        }
         return false;
     }
 
