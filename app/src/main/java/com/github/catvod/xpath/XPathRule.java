@@ -90,10 +90,6 @@ public class XPathRule {
      */
     private String cateUrl;
     /**
-     * 分类页地址2
-     */
-    private String cateUrl2;
-    /**
      * 分类叶视频节点 xpath
      */
     private String cateVodNode;
@@ -356,7 +352,6 @@ public class XPathRule {
             rule.homeVodMark = jsonObj.optString("homeVodMark").trim();
             rule.homeVodMarkR = getPattern(jsonObj, "homeVodMarkR");
             rule.cateUrl = jsonObj.optString("cateUrl").trim();
-            rule.cateUrl2 = jsonObj.optString("cateUrl2").trim();
             rule.cateVodNode = jsonObj.optString("cateVodNode").trim();
             rule.cateVodName = jsonObj.optString("cateVodName").trim();
             rule.cateVodNameR = getPattern(jsonObj, "cateVodNameR");
@@ -488,10 +483,6 @@ public class XPathRule {
 
     public String getCateUrl() {
         return cateUrl;
-    }
-
-    public String getCateUrl2() {
-        return cateUrl2;
     }
 
     public String getCateVodNode() {
