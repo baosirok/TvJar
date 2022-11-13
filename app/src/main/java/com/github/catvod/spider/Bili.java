@@ -23,6 +23,8 @@ import java.util.List;
 public class Bili2 extends Spider {
 
     protected JSONObject ext = null;
+  
+    private String cookies = ext.getJSONArray("cookie");
     
         public void init(Context context, String extend) {
         super.init(context, extend);
@@ -38,15 +40,15 @@ public class Bili2 extends Spider {
         HashMap<String, String> 
         headers = new HashMap<>();
         headers.put("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36");
-        headers.put("cookie", ext.getJSONArray("cookie"));
+        headers.put("cookie", cookies);
         headers.put("Referer", "https://api.bilibili.com");
         return headers;
     }
 
-    @Override
+    //@Override
 
 
-    @Override
+    //@Override
     public String homeContent(boolean filter) {
         JSONObject results = new JSONObject();
         try {
@@ -60,7 +62,7 @@ public class Bili2 extends Spider {
         return results.toString();
     }
 
-    @Override
+    //@Override
     public String homeVideoContent() {
         try {
             JSONArray videos = new JSONArray();
@@ -159,7 +161,7 @@ public class Bili2 extends Spider {
         }
     }
 
-    @Override
+    //Override
     public String detailContent(List<String> ids) {
         int i = 0;
         try {
