@@ -29,6 +29,10 @@ public class XPathMac extends XPath {
     private boolean decodeVipFlag;
     // 播放器配置js
     private String playerConfigJs = "";
+    
+    private final Pattern urlt = Pattern.compile("\"url\": *\"([^\"]*)\",");
+    private final Pattern token = Pattern.compile("\"token\": *\"([^\"]*)\"");
+    private final Pattern vkey = Pattern.compile("\"vkey\": *\"([^\"]*)\",");
     // 播放器配置js取值正则
     private String playerConfigJsRegex = "[\\W|\\S|.]*?MacPlayerConfig.player_list[\\W|\\S|.]*?=([\\W|\\S|.]*?),MacPlayerConfig.downer_list";
     // 站点里播放源对应的真实官源
@@ -118,9 +122,7 @@ public class XPathMac extends XPath {
         return result;
     }
 	
-	private final Pattern urlt = Pattern.compile("\"url\": *\"([^\"]*)\",");
-    private final Pattern token = Pattern.compile("\"token\": *\"([^\"]*)\"");
-    private final Pattern vkey = Pattern.compile("\"vkey\": *\"([^\"]*)\",");
+
 
 
     @Override
@@ -150,7 +152,7 @@ public class XPathMac extends XPath {
                                 videoUrlTmp = URLDecoder.decode(videoUrlTmp);
                             }
                         }
-						if (player.has("BYGA")) {
+						if (player.getString("from").contains("BYGA")) {
 							try {    
 								JSONObject headers = new JSONObject();
 								headers.put("Referer", " https://xmaomi.top/");
@@ -158,7 +160,7 @@ public class XPathMac extends XPath {
 								headers.put("Accept", " text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
 								headers.put("Accept-Language", " zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6");
 								headers.put("Accept-Encoding", " gzip, deflate");
-								JSONObject pCfg = playerConfigJs.getJSONObject("BYGA");
+								JSONObject pCfg = playerConfigJs.getJSONObject("parse");
 								String jxurl = pCfg.getString("parse") + player.getString("url");
 								Document doc = Jsoup.parse(OkHttpUtil.string(jxurl, getHeaders(jxurl)));
 								Elements script = doc.select("body>script");
