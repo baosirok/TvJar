@@ -143,10 +143,8 @@ public class XPath extends Spider {
         try {
             fetchRule();
             String webUrl = "";
-            int pageCount = 0;
             if (!tid.startsWith("@")) {
                 webUrl = categoryUrl(tid, pg, filter, extend);
-                pageCount = Integer.MAX_VALUE;
             } else {
                 webUrl = categoryUrl2(tid.replace("@",""), pg, filter, extend);
             }
@@ -177,13 +175,24 @@ public class XPath extends Spider {
                 v.put("vod_remarks", mark);
                 videos.put(v);
             }
+             if (tid.startsWith("@")){
             JSONObject result = new JSONObject();
-            result.put("page", pg);
-            result.put("pagecount", pageCount);
+            result.put("", pg);
+            result.put("", Integer.MAX_VALUE);
             result.put("limit", 90);
             result.put("total", Integer.MAX_VALUE);
             result.put("list", videos);
             return result.toString();
+            }else{
+            JSONObject result = new JSONObject();
+            result.put("page", pg);
+            result.put("pagecount", Integer.MAX_VALUE);
+            result.put("limit", 90);
+            result.put("total", Integer.MAX_VALUE);
+            result.put("list", videos);
+            return result.toString();
+            }
+            
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
