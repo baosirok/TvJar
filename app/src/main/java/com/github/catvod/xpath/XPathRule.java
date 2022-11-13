@@ -90,6 +90,10 @@ public class XPathRule {
      */
     private String cateUrl;
     /**
+     * 分类页地址2
+     */
+    private String cateUrl2;
+    /**
      * 分类叶视频节点 xpath
      */
     private String cateVodNode;
@@ -244,6 +248,10 @@ public class XPathRule {
      */
     private Pattern dtUrlNameR;
     /**
+     * 详情播放选集反转
+     */
+    private boolean dtEpiRevers;
+    /**
      * 播放页面url
      */
     private String playUrl;
@@ -293,6 +301,18 @@ public class XPathRule {
      * 正则对取到的数据进行二次处理
      */
     private Pattern scVodMarkR;
+    /**
+     * 手动嗅探
+     */
+    private boolean ManualSniff;
+    /**
+     * 嗅探词
+     */
+    private String sniffWord;
+    /**
+     * 过滤词
+     */
+    private String filterWord;
 
     private static Pattern getPattern(JSONObject json, String key) {
         String v = json.optString(key).trim();
@@ -352,6 +372,7 @@ public class XPathRule {
             rule.homeVodMark = jsonObj.optString("homeVodMark").trim();
             rule.homeVodMarkR = getPattern(jsonObj, "homeVodMarkR");
             rule.cateUrl = jsonObj.optString("cateUrl").trim();
+            rule.cateUrl2 = jsonObj.optString("cateUrl2").trim();
             rule.cateVodNode = jsonObj.optString("cateVodNode").trim();
             rule.cateVodName = jsonObj.optString("cateVodName").trim();
             rule.cateVodNameR = getPattern(jsonObj, "cateVodNameR");
@@ -390,6 +411,7 @@ public class XPathRule {
             rule.dtUrlIdR = getPattern(jsonObj, "dtUrlIdR");
             rule.dtUrlName = jsonObj.optString("dtUrlName");
             rule.dtUrlNameR = getPattern(jsonObj, "dtUrlNameR");
+            rule.dtEpiRevers = jsonObj.optBoolean("dtEpiRevers", false);
             rule.playUrl = jsonObj.optString("playUrl");
             rule.playUa = jsonObj.optString("playUa");
             rule.searchUrl = jsonObj.optString("searchUrl");
@@ -402,6 +424,9 @@ public class XPathRule {
             rule.scVodImgR = getPattern(jsonObj, "scVodImgR");
             rule.scVodMark = jsonObj.optString("scVodMark").trim();
             rule.scVodMarkR = getPattern(jsonObj, "scVodMarkR");
+            rule.ManualSniff = jsonObj.optBoolean("ManualSniff", false);
+            rule.sniffWord = jsonObj.optString("sniffWord");
+            rule.filterWord = jsonObj.optString("filterWord");
             return rule;
         } catch (Exception e) {
             SpiderDebug.log(e);
@@ -483,6 +508,10 @@ public class XPathRule {
 
     public String getCateUrl() {
         return cateUrl;
+    }
+
+    public String getCateUrl2() {
+        return cateUrl2;
     }
 
     public String getCateVodNode() {
@@ -636,6 +665,10 @@ public class XPathRule {
     public String getDetailUrlNameR(String src) {
         return doReplaceRegex(dtUrlNameR, src);
     }
+    
+    public boolean getDetailEpiRevers() {
+        return dtEpiRevers;
+    }
 
     public String getPlayUrl() {
         return playUrl;
@@ -683,5 +716,17 @@ public class XPathRule {
 
     public String getSearchVodMarkR(String src) {
         return doReplaceRegex(scVodMarkR, src);
+    }
+    
+    public boolean getManualSniff() {
+        return ManualSniff;
+    }
+    
+    public String getSniffWord() {
+        return sniffWord;
+    }
+
+    public String getFilterWord() {
+        return filterWord;
     }
 }
