@@ -28,7 +28,7 @@ public class Bili2 extends Spider {
         HashMap<String, String> 
         headers = new HashMap<>();
         headers.put("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36");
-        headers.put("cookie", ext.getJSONArray("cookie"));
+        headers.put("cookie", "aaa");
         headers.put("Referer", "https://api.bilibili.com");
         return headers;
     }
