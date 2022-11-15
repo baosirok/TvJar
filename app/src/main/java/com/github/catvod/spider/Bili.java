@@ -168,7 +168,7 @@ public class Bili extends Spider {
             long j = jSONObject2.getLong("aid");
             String sb4 = j + "";
             String sb6 = "https://api.bilibili.com/x/web-interface/view?aid=" + sb4;
-            JSONObject jSONObject3 = new JSONObject(OkHttpUtil.string(sb6, getHeaders(url)));
+            JSONObject jSONObject3 = new JSONObject(OkHttpUtil.string(sb6, getHeaders(sb6)));
             JSONObject jSONObject4 = jSONObject3.getJSONObject("data");
             JSONObject v = new JSONObject();
             v.put("vod_id", str);
@@ -227,7 +227,7 @@ public class Bili extends Spider {
             String str3 = split[0];
             String str4 = split[1];
             String sb2 = "https://api.bilibili.com/x/player/playurl?avid=" + str3 + "&cid= " + str4 + "&qn=120&fourk=1";
-            JSONObject jSONObject = new JSONObject(OkHttpUtil.string(sb2, getHeaders(url)));
+            JSONObject jSONObject = new JSONObject(OkHttpUtil.string(sb2, getHeaders(sb2)));
             JSONObject jSONObject2 = new JSONObject();
             jSONObject2.put("parse", "0");
             jSONObject2.put("playUrl", "");
