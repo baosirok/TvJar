@@ -24,7 +24,7 @@ public class Bili extends Spider {
 
     protected JSONObject ext = null;
     
-    private String b = "";
+    
 
     @Override
     public void init(Context context, String extend) {
@@ -32,7 +32,7 @@ public class Bili extends Spider {
         try {
             String content = OkHttpUtil.string(extend, null);
             ext = new JSONObject(content);
-            this.b = ext.optString("cookie");
+            
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
@@ -58,7 +58,7 @@ public class Bili extends Spider {
         HashMap<String, String> 
         headers = new HashMap<>();
         headers.put("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36");
-        headers.put("cookie",b);
+        headers.put("cookie",ext.optString("cookie"));
         headers.put("Referer", "https://api.bilibili.com");
         return headers;
     }
