@@ -55,7 +55,7 @@ public class Bili extends Spider {
     
         try {
 			String cookies = OkHttpUtil.string(extend, null);
-            JSONObject cookie = new JSONObject(cookies).getJSONObject("cookie");
+            JSONObject cookie = new JSONObject(cookies);
             this.b = cookie.optString("cookie");
  
         } catch (Throwable e) {
@@ -67,7 +67,7 @@ public class Bili extends Spider {
         HashMap<String, String> 
         headers = new HashMap<>();
         headers.put("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36");
-        headers.put("cookie","LIVE_BUVID=AUTO4516663658327302; buvid3=F0F8EA68-ED20-4B13-AD43-7EFCF7EE9F5E167618infoc; _uuid=D4147559-FF7B-BFE5-8A99-758AFE105FCF151828infoc; buvid4=20DFAD6A-FF99-A004-B090-7D84E234FE9D57250-022102123-+rus4EeLfb9hlnTyJADtHQ%3D%3D; PVID=4; b_nut=100; i-wanna-go-back=-1; fingerprint=eab6d8618ec9998a4602d121858337dd; buvid_fp_plain=undefined; SESSDATA=78714b27%2C1682853561%2C3132d%2Ab2; bili_jct=6c1571b2c75b429ce3ab70dfa3e68b38; DedeUserID=55423440; DedeUserID__ckMd5=51aa4b87f11ea4d5; b_ut=5; buvid_fp=eab6d8618ec9998a4602d121858337dd; CURRENT_BLACKGAP=1; rpdid=|(k|YklkJ||Y0J\'uYY~J|l~Jk; sid=747lsnjo; CURRENT_QUALITY=112; nostalgia_conf=-1; innersign=1; theme_style=light; CURRENT_FNVAL=4048; b_lsid=A391083D6_1843838A9CB");
+        headers.put("cookie",b);
         headers.put("Referer", "https://api.bilibili.com");
         return headers;
     }
