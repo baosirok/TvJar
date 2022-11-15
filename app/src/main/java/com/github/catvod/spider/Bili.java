@@ -32,6 +32,7 @@ public class Bili extends Spider {
         try {
             String content = OkHttpUtil.string(extend, null);
             ext = new JSONObject(content);
+            this.b = ext.optString("cookie");
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
@@ -51,17 +52,7 @@ public class Bili extends Spider {
         return results.toString();
     }
     
-    public void getcookie(Context context, String extend) {
-    
-        try {
-			String cookies = OkHttpUtil.string(extend, null);
-            JSONObject cookie = new JSONObject(cookies);
-            this.b = cookie.optString("cookie");
- 
-        } catch (Throwable e) {
-            SpiderDebug.log(e);
-        }
-    }
+
     
         protected HashMap<String, String> getHeaders(String url) {
         HashMap<String, String> 
