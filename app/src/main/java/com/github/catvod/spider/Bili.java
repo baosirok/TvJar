@@ -23,8 +23,6 @@ import java.util.List;
 public class Bili extends Spider {
 
     protected JSONObject ext = null;
-    
-    public static String cookie = "";
 
     @Override
     public void init(Context context, String extend) {
@@ -38,16 +36,7 @@ public class Bili extends Spider {
         }
     }
     
-    public void getcookie(Context context, String str) {
-        try {
-            
-            JSONObject cookie = new JSONObject(OkHttpUtil.string("http://t542879y96.oicp.vip:1014/mao/txt/cookie.txt", null));
-            this.cookie = cookie.optString("cookie");
-           
-        } catch (Throwable e) {
-            SpiderDebug.log(e);
-        }
-    }
+
 
     @Override
     public String homeContent(boolean filter) {
@@ -69,7 +58,7 @@ public class Bili extends Spider {
         HashMap<String, String> 
         headers = new HashMap<>();
         headers.put("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36");
-        headers.put("cookie",this.cookie);
+        headers.put("cookie",ext.optString("cookie"));
         headers.put("Referer", "https://api.bilibili.com");
        
         return headers;
