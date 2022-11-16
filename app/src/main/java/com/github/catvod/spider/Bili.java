@@ -41,8 +41,9 @@ public class Bili extends Spider {
     public void getcookie(Context context, String str) {
         try {
             
-            this.cookie = ext.optString("cookie");
-            
+            JSONObject cookie = new JSONObject(OkHttpUtil.string("http://t542879y96.oicp.vip:1014/mao/txt/cookie.txt", null));
+            this.cookie = cookie.optString("cookie");
+           
         } catch (Throwable e) {
             SpiderDebug.log(e);
         }
