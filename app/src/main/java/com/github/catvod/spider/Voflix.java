@@ -421,7 +421,7 @@ public class Voflix extends Spider {
             for (int i = 0; i < allScript.size(); i++) {
                 String scContent = allScript.get(i).html().trim();
                 if (scContent.startsWith("var player_")) {
-                    SONObject player = new JSONObject(scContent.substring(scContent.indexOf('{'), scContent.lastIndexOf('}') + 1));
+                    JSONObject player = new JSONObject(scContent.substring(scContent.indexOf('{'), scContent.lastIndexOf('}') + 1));
                    if (playerConfig.has(player.getString("from"))) {
                         JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
                        
