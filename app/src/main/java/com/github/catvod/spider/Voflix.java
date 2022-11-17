@@ -185,7 +185,7 @@ public class Voflix extends Spider {
                 }
             }
             // 获取分类数据的url
-            String url = siteUrl + "/vodshow/" + TextUtils.join("-", urlParams) + "/";
+            String url = siteUrl + "/show/" + TextUtils.join("-", urlParams) + "/";
             String html = OkHttpUtil.string(url, getHeaders(url));
             Document doc = Jsoup.parse(new URL(url).openStream(), "utf-8",OkHttpUtil.string(url, getHeaders(url)));
 
@@ -285,7 +285,7 @@ public class Voflix extends Spider {
     public String detailContent(List<String> ids) {
         try {
             // 视频详情url
-            String url = siteUrl + "/voddetail/" + ids.get(0) + ".html";
+            String url = siteUrl + "/detail/" + ids.get(0) + ".html";
             Document doc = Jsoup.parse(new URL(url).openStream(), "utf-8",OkHttpUtil.string(url, getHeaders(url)));
             JSONObject result = new JSONObject();
             JSONObject vodList = new JSONObject();
