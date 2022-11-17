@@ -419,7 +419,6 @@ public class Voflix extends Spider {
              Elements allScript = doc.select("script");
             //Elements allScript = Jsoup.parse(new URL(url).openStream(), "utf-8",OkHttpUtil.string(url, getHeaders(url))).select("script");
             JSONObject result = new JSONObject();
-            JSONObject result = new JSONObject();
             for (int i = 0; i < allScript.size(); i++) {
                 String scContent = allScript.get(i).html().trim();
                 if (scContent.startsWith("var player_")) { // 取直链
