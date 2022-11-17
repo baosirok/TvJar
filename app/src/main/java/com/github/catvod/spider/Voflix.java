@@ -415,14 +415,26 @@ public class Voflix extends Spider {
             headers.put("Accept-Language", " zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6");
             headers.put("Accept-Encoding", " gzip, deflate");
             String url = siteUrl + "/play/" + id + ".html";
-            Elements allScript = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url))).select("script");
+             Document doc = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url)));
+             Elements allScript = doc.select("script");
+            //Elements allScript = Jsoup.parse(new URL(url).openStream(), "utf-8",OkHttpUtil.string(url, getHeaders(url))).select("script");
+            JSONObject result = new JSONObject();
             JSONObject result = new JSONObject();
             for (int i = 0; i < allScript.size(); i++) {
                 String scContent = allScript.get(i).html().trim();
-                if (scContent.startsWith("var player_")) {
-                    JSONObject player = new JSONObject(scContent.substring(scContent.indexOf('{'), scContent.lastIndexOf('}') + 1));
+                if (scContent.startsWith("var player_")) { // 取直链
+                    int start = scContent.indexOf('{');
+                    int end = scContent.lastIndexOf('}') + 1;
+                    String json = scContent.substring(start, end);
+                    JSONObject player = new JSONObject(json);
                     if (playerConfig.has(player.getString("from"))) {
                         JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
+            //for (int i = 0; i < allScript.size(); i++) {
+                //String scContent = allScript.get(i).html().trim();
+               // if (scContent.startsWith("var player_")) {
+                    //JSONObject player = new JSONObject(scContent.substring(scContent.indexOf('{'), scContent.lastIndexOf('}') + 1));
+                   // if (playerConfig.has(player.getString("from"))) {
+                        //JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
                         //String jxurl = "https://player.tjomet.com/lgyy/?url=" + player.getString("url");
                         String jxurl = pCfg.getString("parse") + player.getString("url");
                         Document doc = Jsoup.parse(OkHttpUtil.string(jxurl, getHeaders(jxurl)));
