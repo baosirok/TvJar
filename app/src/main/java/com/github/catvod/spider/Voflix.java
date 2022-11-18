@@ -423,7 +423,7 @@ public class Voflix extends Spider {
                 String scContent = allScript.get(i).html().trim();
                 if (scContent.startsWith("var player_")) {
                     JSONObject player = new JSONObject(scContent.substring(scContent.indexOf('{'), scContent.lastIndexOf('}') + 1));
-                   if (playerConfig.has("duoduozy") {
+                   if (playerConfig.has("duoduozy")) {
                         JSONObject pCfg = playerConfig.getJSONObject("duoduozy");
                        
                         String jxurl = "https://play.shtpin.com/xplay/?url=" + player.getString("url");
