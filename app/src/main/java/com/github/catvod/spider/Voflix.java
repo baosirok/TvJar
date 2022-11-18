@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import okhttp3.Call;
 
 
 
@@ -59,8 +58,8 @@ public class Voflix extends Spider {
     public void init(Context context) {
         super.init(context);
         try {
-            playerConfig = new JSONObject("{\"duoduozy\":{\"show\":\"VOFLIX\",\"des\":\"\",\"ps\":\"0\",\"parse\":\"https://play.shcpin.com/xplay/?url=\"}}");
-            filterConfig = new JSONObject("{\"1\":[{\"name\":\"年份\",\"key\":\"year\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"}]},{\"name\":\"地区\",\"key\":\"area\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"大陆\",\"v\":\"大陆\"},{\"n\":\"香港\",\"v\":\"香港\"},{\"n\":\"台湾\",\"v\":\"台湾\"},{\"n\":\"美国\",\"v\":\"美国\"},{\"n\":\"法国\",\"v\":\"法国\"},{\"n\":\"英国\",\"v\":\"英国\"},{\"n\":\"日本\",\"v\":\"日本\"},{\"n\":\"韩国\",\"v\":\"韩国\"},{\"n\":\"德国\",\"v\":\"德国\"},{\"n\":\"泰国\",\"v\":\"泰国\"},{\"n\":\"印度\",\"v\":\"印度\"},{\"n\":\"意大利\",\"v\":\"意大利\"},{\"n\":\"西班牙\",\"v\":\"西班牙\"},{\"n\":\"加拿大\",\"v\":\"加拿大\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"name\":\"类型\",\"key\":\"class\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"动作\",\"v\":\"动作\"},{\"n\":\"喜剧\",\"v\":\"喜剧\"},{\"n\":\"爱情\",\"v\":\"爱情\"},{\"n\":\"科幻\",\"v\":\"科幻\"},{\"n\":\"恐怖\",\"v\":\"恐怖\"},{\"n\":\"剧情\",\"v\":\"剧情\"},{\"n\":\"战争\",\"v\":\"战争\"},{\"n\":\"悬疑\",\"v\":\"悬疑\"},{\"n\":\"冒险\",\"v\":\"冒险\"},{\"n\":\"犯罪\",\"v\":\"犯罪\"},{\"n\":\"奇幻\",\"v\":\"奇幻\"},{\"n\":\"惊悚\",\"v\":\"惊悚\"},{\"n\":\"青春\",\"v\":\"青春\"},{\"n\":\"动画\",\"v\":\"动画\"}]},{\"name\":\"排序\",\"key\":\"by\",\"value\":[{\"n\":\"最新\",\"v\":\"time\"},{\"n\":\"人气\",\"v\":\"hits\"},{\"n\":\"评分\",\"v\":\"score\"}]}],\"2\":[{\"name\":\"年份\",\"key\":\"year\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"}]},{\"name\":\"地区\",\"key\":\"area\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"内地\",\"v\":\"内地\"},{\"n\":\"韩国\",\"v\":\"韩国\"},{\"n\":\"香港\",\"v\":\"香港\"},{\"n\":\"台湾\",\"v\":\"台湾\"},{\"n\":\"日本\",\"v\":\"日本\"},{\"n\":\"美国\",\"v\":\"美国\"},{\"n\":\"泰国\",\"v\":\"泰国\"},{\"n\":\"英国\",\"v\":\"英国\"},{\"n\":\"新加坡\",\"v\":\"新加坡\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"name\":\"类型\",\"key\":\"class\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"古装\",\"v\":\"古装\"},{\"n\":\"战争\",\"v\":\"战争\"},{\"n\":\"青春偶像\",\"v\":\"青春偶像\"},{\"n\":\"喜剧\",\"v\":\"喜剧\"},{\"n\":\"家庭\",\"v\":\"家庭\"},{\"n\":\"犯罪\",\"v\":\"犯罪\"},{\"n\":\"动作\",\"v\":\"动作\"},{\"n\":\"奇幻\",\"v\":\"奇幻\"},{\"n\":\"剧情\",\"v\":\"剧情\"},{\"n\":\"历史\",\"v\":\"历史\"},{\"n\":\"经典\",\"v\":\"经典\"},{\"n\":\"乡村\",\"v\":\"乡村\"},{\"n\":\"情景\",\"v\":\"情景\"},{\"n\":\"商战\",\"v\":\"商战\"},{\"n\":\"网剧\",\"v\":\"网剧\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"name\":\"排序\",\"key\":\"by\",\"value\":[{\"n\":\"最新\",\"v\":\"time\"},{\"n\":\"人气\",\"v\":\"hits\"},{\"n\":\"评分\",\"v\":\"score\"}]}],\"3\":[{\"name\":\"年份\",\"key\":\"year\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"}]},{\"name\":\"地区\",\"key\":\"area\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"内地\",\"v\":\"内地\"},{\"n\":\"港台\",\"v\":\"港台\"},{\"n\":\"日韩\",\"v\":\"日韩\"},{\"n\":\"欧美\",\"v\":\"欧美\"}]},{\"name\":\"排序\",\"key\":\"by\",\"value\":[{\"n\":\"最新\",\"v\":\"time\"},{\"n\":\"人气\",\"v\":\"hits\"},{\"n\":\"评分\",\"v\":\"score\"}]}],\"5\":[{\"name\":\"年份\",\"key\":\"year\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"}]},{\"name\":\"类型\",\"key\":\"class\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"番剧\",\"v\":\"番剧\"},{\"n\":\"国创\",\"v\":\"国创\"},{\"n\":\"动画片\",\"v\":\"动画片\"}]},{\"name\":\"排序\",\"key\":\"by\",\"value\":[{\"n\":\"最新\",\"v\":\"time\"},{\"n\":\"人气\",\"v\":\"hits\"},{\"n\":\"评分\",\"v\":\"score\"}]}]}");
+            playerConfig = new JSONObject({"{\"duoduozy\":{\"show\":\"VOFLIX\",\"des\":\"\",\"ps\":\"0\",\"parse\":\"https://play.shcpin.com/xplay/?url=\"},\"ysgc\":{\"show\":\"\u84dd\u5149\u4e13\u7ebf\",\"des\":\"\\/static\\/images\\/ico\\/newysgc.png\",\"ps\":\"0\",\"parse\":\"\"},\"sohu\":{\"show\":\"\u641c\u72d0\",\"des\":\"\",\"ps\":\"0\",\"parse\":\"\"},\"qq\":{\"show\":\"\u817e\u8baf\",\"des\":\"\",\"ps\":\"0\",\"parse\":\"\"},\"bilibili\":{\"show\":\"\u54d4\u54e9\",\"des\":\"\",\"ps\":\"0\",\"parse\":\"\"},\"youku\":{\"show\":\"\u4f18\u9177\",\"des\":\"\",\"ps\":\"0\",\"parse\":\"\"},\"qiyi\":{\"show\":\"\u7231\u5947\u827a\",\"des\":\"\",\"ps\":\"0\",\"parse\":\"\"},\"mgtv\":{\"show\":\"\u8292\u679c\",\"des\":\"\",\"ps\":\"0\",\"parse\":\"\"},\"xigua\":{\"show\":\"\u897f\u74dc\",\"des\":\"\",\"ps\":\"0\",\"parse\":\"\"},\"pptv\":{\"show\":\"PPTV\",\"des\":\"\",\"ps\":\"0\",\"parse\":\"\"},\"wujin\":{\"show\":\"\u65e0\u5c3d\u8d44\u6e90\",\"des\":\"\\/static\\/images\\/ico\\/wj.jpg\",\"ps\":\"0\",\"parse\":\"\"}}");
+            filterConfig = new JSONObject({\"1\":[{\"name\":\"\u5e74\u4efd\",\"key\":\"year\",\"value\":[{\"n\":\"\u5168\u90e8\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"}]},{\"name\":\"\u5730\u533a\",\"key\":\"area\",\"value\":[{\"n\":\"\u5168\u90e8\",\"v\":\"\"},{\"n\":\"\u5927\u9646\",\"v\":\"\u5927\u9646\"},{\"n\":\"\u9999\u6e2f\",\"v\":\"\u9999\u6e2f\"},{\"n\":\"\u53f0\u6e7e\",\"v\":\"\u53f0\u6e7e\"},{\"n\":\"\u7f8e\u56fd\",\"v\":\"\u7f8e\u56fd\"},{\"n\":\"\u6cd5\u56fd\",\"v\":\"\u6cd5\u56fd\"},{\"n\":\"\u82f1\u56fd\",\"v\":\"\u82f1\u56fd\"},{\"n\":\"\u65e5\u672c\",\"v\":\"\u65e5\u672c\"},{\"n\":\"\u97e9\u56fd\",\"v\":\"\u97e9\u56fd\"},{\"n\":\"\u5fb7\u56fd\",\"v\":\"\u5fb7\u56fd\"},{\"n\":\"\u6cf0\u56fd\",\"v\":\"\u6cf0\u56fd\"},{\"n\":\"\u5370\u5ea6\",\"v\":\"\u5370\u5ea6\"},{\"n\":\"\u610f\u5927\u5229\",\"v\":\"\u610f\u5927\u5229\"},{\"n\":\"\u897f\u73ed\u7259\",\"v\":\"\u897f\u73ed\u7259\"},{\"n\":\"\u52a0\u62ff\u5927\",\"v\":\"\u52a0\u62ff\u5927\"},{\"n\":\"\u5176\u4ed6\",\"v\":\"\u5176\u4ed6\"}]},{\"name\":\"\u7c7b\u578b\",\"key\":\"class\",\"value\":[{\"n\":\"\u5168\u90e8\",\"v\":\"\"},{\"n\":\"\u52a8\u4f5c\",\"v\":\"\u52a8\u4f5c\"},{\"n\":\"\u559c\u5267\",\"v\":\"\u559c\u5267\"},{\"n\":\"\u7231\u60c5\",\"v\":\"\u7231\u60c5\"},{\"n\":\"\u79d1\u5e7b\",\"v\":\"\u79d1\u5e7b\"},{\"n\":\"\u6050\u6016\",\"v\":\"\u6050\u6016\"},{\"n\":\"\u5267\u60c5\",\"v\":\"\u5267\u60c5\"},{\"n\":\"\u6218\u4e89\",\"v\":\"\u6218\u4e89\"},{\"n\":\"\u60ac\u7591\",\"v\":\"\u60ac\u7591\"},{\"n\":\"\u5192\u9669\",\"v\":\"\u5192\u9669\"},{\"n\":\"\u72af\u7f6a\",\"v\":\"\u72af\u7f6a\"},{\"n\":\"\u5947\u5e7b\",\"v\":\"\u5947\u5e7b\"},{\"n\":\"\u60ca\u609a\",\"v\":\"\u60ca\u609a\"},{\"n\":\"\u9752\u6625\",\"v\":\"\u9752\u6625\"},{\"n\":\"\u52a8\u753b\",\"v\":\"\u52a8\u753b\"}]},{\"name\":\"\u6392\u5e8f\",\"key\":\"by\",\"value\":[{\"n\":\"\u6700\u65b0\",\"v\":\"time\"},{\"n\":\"\u4eba\u6c14\",\"v\":\"hits\"},{\"n\":\"\u8bc4\u5206\",\"v\":\"score\"}]}],\"2\":[{\"name\":\"\u5e74\u4efd\",\"key\":\"year\",\"value\":[{\"n\":\"\u5168\u90e8\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"}]},{\"name\":\"\u5730\u533a\",\"key\":\"area\",\"value\":[{\"n\":\"\u5168\u90e8\",\"v\":\"\"},{\"n\":\"\u5185\u5730\",\"v\":\"\u5185\u5730\"},{\"n\":\"\u97e9\u56fd\",\"v\":\"\u97e9\u56fd\"},{\"n\":\"\u9999\u6e2f\",\"v\":\"\u9999\u6e2f\"},{\"n\":\"\u53f0\u6e7e\",\"v\":\"\u53f0\u6e7e\"},{\"n\":\"\u65e5\u672c\",\"v\":\"\u65e5\u672c\"},{\"n\":\"\u7f8e\u56fd\",\"v\":\"\u7f8e\u56fd\"},{\"n\":\"\u6cf0\u56fd\",\"v\":\"\u6cf0\u56fd\"},{\"n\":\"\u82f1\u56fd\",\"v\":\"\u82f1\u56fd\"},{\"n\":\"\u65b0\u52a0\u5761\",\"v\":\"\u65b0\u52a0\u5761\"},{\"n\":\"\u5176\u4ed6\",\"v\":\"\u5176\u4ed6\"}]},{\"name\":\"\u7c7b\u578b\",\"key\":\"class\",\"value\":[{\"n\":\"\u5168\u90e8\",\"v\":\"\"},{\"n\":\"\u53e4\u88c5\",\"v\":\"\u53e4\u88c5\"},{\"n\":\"\u6218\u4e89\",\"v\":\"\u6218\u4e89\"},{\"n\":\"\u9752\u6625\u5076\u50cf\",\"v\":\"\u9752\u6625\u5076\u50cf\"},{\"n\":\"\u559c\u5267\",\"v\":\"\u559c\u5267\"},{\"n\":\"\u5bb6\u5ead\",\"v\":\"\u5bb6\u5ead\"},{\"n\":\"\u72af\u7f6a\",\"v\":\"\u72af\u7f6a\"},{\"n\":\"\u52a8\u4f5c\",\"v\":\"\u52a8\u4f5c\"},{\"n\":\"\u5947\u5e7b\",\"v\":\"\u5947\u5e7b\"},{\"n\":\"\u5267\u60c5\",\"v\":\"\u5267\u60c5\"},{\"n\":\"\u5386\u53f2\",\"v\":\"\u5386\u53f2\"},{\"n\":\"\u7ecf\u5178\",\"v\":\"\u7ecf\u5178\"},{\"n\":\"\u4e61\u6751\",\"v\":\"\u4e61\u6751\"},{\"n\":\"\u60c5\u666f\",\"v\":\"\u60c5\u666f\"},{\"n\":\"\u5546\u6218\",\"v\":\"\u5546\u6218\"},{\"n\":\"\u7f51\u5267\",\"v\":\"\u7f51\u5267\"},{\"n\":\"\u5176\u4ed6\",\"v\":\"\u5176\u4ed6\"}]},{\"name\":\"\u6392\u5e8f\",\"key\":\"by\",\"value\":[{\"n\":\"\u6700\u65b0\",\"v\":\"time\"},{\"n\":\"\u4eba\u6c14\",\"v\":\"hits\"},{\"n\":\"\u8bc4\u5206\",\"v\":\"score\"}]}],\"3\":[{\"name\":\"\u5e74\u4efd\",\"key\":\"year\",\"value\":[{\"n\":\"\u5168\u90e8\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"}]},{\"name\":\"\u5730\u533a\",\"key\":\"area\",\"value\":[{\"n\":\"\u5168\u90e8\",\"v\":\"\"},{\"n\":\"\u5185\u5730\",\"v\":\"\u5185\u5730\"},{\"n\":\"\u6e2f\u53f0\",\"v\":\"\u6e2f\u53f0\"},{\"n\":\"\u65e5\u97e9\",\"v\":\"\u65e5\u97e9\"},{\"n\":\"\u6b27\u7f8e\",\"v\":\"\u6b27\u7f8e\"}]},{\"name\":\"\u6392\u5e8f\",\"key\":\"by\",\"value\":[{\"n\":\"\u6700\u65b0\",\"v\":\"time\"},{\"n\":\"\u4eba\u6c14\",\"v\":\"hits\"},{\"n\":\"\u8bc4\u5206\",\"v\":\"score\"}]}],\"5\":[{\"name\":\"\u5e74\u4efd\",\"key\":\"year\",\"value\":[{\"n\":\"\u5168\u90e8\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"}]},{\"name\":\"\u7c7b\u578b\",\"key\":\"class\",\"value\":[{\"n\":\"\u5168\u90e8\",\"v\":\"\"},{\"n\":\"\u756a\u5267\",\"v\":\"\u756a\u5267\"},{\"n\":\"\u56fd\u521b\",\"v\":\"\u56fd\u521b\"},{\"n\":\"\u52a8\u753b\u7247\",\"v\":\"\u52a8\u753b\u7247\"}]},{\"name\":\"\u6392\u5e8f\",\"key\":\"by\",\"value\":[{\"n\":\"\u6700\u65b0\",\"v\":\"time\"},{\"n\":\"\u4eba\u6c14\",\"v\":\"hits\"},{\"n\":\"\u8bc4\u5206\",\"v\":\"score\"}]}]}");
         } catch (JSONException e) {
             SpiderDebug.log(e);
         }
@@ -415,87 +414,56 @@ public class Voflix extends Spider {
             headers.put("Accept", " text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
             headers.put("Accept-Language", " zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6");
             headers.put("Accept-Encoding", " gzip, deflate");
-            
-            
-            // 播放页 url
             String url = siteUrl + "/play/" + id + ".html";
-            Elements allScript = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url))).select("script");
+            Document doc = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url)));
+Elements allScript = doc.select("script");
             JSONObject result = new JSONObject();
             for (int i = 0; i < allScript.size(); i++) {
                 String scContent = allScript.get(i).html().trim();
-                if (scContent.startsWith("var player_aaaa")) { // 取直链
+                if (scContent.startsWith("var player_")) { // 取直链
                     int start = scContent.indexOf('{');
                     int end = scContent.lastIndexOf('}') + 1;
                     String json = scContent.substring(start, end);
                     JSONObject player = new JSONObject(json);
-                    //System.out.println("pla" + player);
                     if (playerConfig.has(player.getString("from"))) {
                         JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
-                        //System.out.println("pc" + pCfg);
-                        String videoUrl = player.getString("url");
-                        String playUrl = pCfg.getString("parse");
-                        String show = pCfg.getString("show");
-                        if (show == "VOFLIX") {
-                       String jxurl = "https://play.shtpin.com/xplay/?url=" + videoUrl;
-                       //System.out.println("jx" + jxurl);
-                       HashMap<String, String> headerss = new HashMap<>();
-                            headers.put("referer", siteUrl);
-                       Document doc = Jsoup.parse(OkHttpUtil.string(jxurl,headerss));
-                       //System.out.println("zh" + doc);
-                        Elements script = doc.select("body>script");
-                        for (int j = 0; j < script.size(); j++) {
-                          String content = script.get(j).html().trim();
-                        if (content.contains("var config =")){
-                            Matcher matcher1 = urlt.matcher(content);
-                            if (!matcher1.find())
-                                continue;
-                            Matcher matcher2 = token.matcher(content);
-                            if (!matcher2.find())
-                                continue;
-                            Matcher matcher3 = vkey.matcher(content);
-                            if (!matcher3.find())
-                                continue;
-                            String video_url = matcher1.group(1);
-                            String video_token = matcher2.group(1);
-                            String video_key = matcher3.group(1);                          
-                            String video_sign= "F4penExTGogdt6U8" ;
-                            String video_tm = String.valueOf(System.currentTimeMillis()/ 1000);
-                            HashMap hashMap = new HashMap();
-                            hashMap.put("token", video_token);
-                            hashMap.put("tm", video_tm);
-                            hashMap.put("url", video_url);
-                            hashMap.put("vkey", video_key);
-                             hashMap.put("sign", video_sign);
-                            OkHttpUtil.get(OkHttpUtil.defaultClient(), "https://play.shtpin.com/xplay/555tZ4pvzHE3BpiO838.php", hashMap, new OKCallBack.OKCallBackString() {
-                                @Override
-                                protected void onFailure(Call call, Exception exc) {
-                                }
-
-                            public void onResponse(String str) {
-                            try {
-                                        String url = new String(Base64.decode(new JSONObject(str).getString("url").substring(8).getBytes(), Base64.DEFAULT));
-                                        result.put("url", url.substring(8, url.length() - 8));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
-                          }
-                          }
-                        //    result.put("header", headers.toString());
+                             if (player.getString("from").contains("duoduozy")) {
+                            String videoUrl = pCfg.getString("parse") + player.getString("url");
+                            Document docs = Jsoup.parse(OkHttpUtil.string(videoUrl, getHeaders(videoUrl)));
+                        Elements allScripts = docs.select("body script");
+                        for (int j = 0; j < allScripts.size(); j++) {
+                            String Content = allScripts.get(j).html().trim();
+                            Matcher matcher = urlt.matcher(Content);
+                            if (!matcher.find()) {
+                                return "";
+                            }
+                            String urlt = matcher.group(1);
+                            Matcher matcher1 = token.matcher(Content);
+                            if (!matcher1.find()) {
+                                return "";
+                            }
+                            String token = matcher1.group(1);
+                            Matcher matcher2 = vkey.matcher(Content);
+                            if (!matcher2.find()) {
+                                return "";
+                            }
+                            String vkey = matcher2.group(1);
+                            String tUrl = "https://play.shcpin.com/xplay/555tZ4pvzHE3BpiO838.php?url=" + urlt + "&vkey=" + vkey + "&token" + token +"&sign=F4penExTGogdt6U8";
+                            JSONObject zurl = new JSONObject(OkHttpUtil.string(tUrl, getHeaders(tUrl)));
+                            String zurls = new String(Base64.decode(zurl.getString("url").substring(8).getBytes(), 0));
+                            result.put("url", zurls.substring(8, url.length() - 8));
+                            result.put("header", headers.toString());
                             result.put("parse", 0);
                             result.put("playUrl", "");
-                        } else {
-                            if (videoUrl.contains(".m3u8")) {
-                                result.put("parse", 0);
-                                result.put("playUrl", "");
-                                result.put("url", videoUrl);
-                             //   result.put("header", headers.toString());
-                    }    
-                  }
-                 } 
-              }  
-            }
+
+                        }
+                       }
+                      }
+                     }
+                    }
+                    
+                
+            
             return result.toString();
         } catch (Exception e) {
             SpiderDebug.log(e);
