@@ -419,7 +419,7 @@ public class Voflix extends Spider {
             Elements allScript = docc.select("script");
             JSONObject result = new JSONObject();
             
-            
+
                    if (playerConfig.has("duoduozy")) {
                         JSONObject pCfg = playerConfig.getJSONObject("duoduozy");
                        
@@ -469,7 +469,7 @@ public class Voflix extends Spider {
                         }
                     }
                 
-            }
+            
             return result.toString();
         } catch (Exception e) {
             SpiderDebug.log(e);
