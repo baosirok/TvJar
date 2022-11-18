@@ -416,12 +416,12 @@ public class Voflix extends Spider {
             headers.put("Accept-Encoding", " gzip, deflate");
             String url = siteUrl + "/play/" + id + ".html";            
             Document docc = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url)));
-            Elements allScript = docc.select("script");
+            Elements allScript = docc.select("body>script");
             JSONObject result = new JSONObject();
             
             for (int i = 0; i < allScript.size(); i++) {
                 String scContent = allScript.get(i).html().trim();
-                if (scContent.startsWith("var player_")) {
+                if (scContent.startsWith("var player_aaaa")) {
                     JSONObject player = new JSONObject(scContent.substring(scContent.indexOf('{'), scContent.lastIndexOf('}') + 1));
                    if (playerConfig.has(player.getString("from"))) {
                         JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
