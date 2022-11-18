@@ -444,7 +444,7 @@ public class Voflix extends Spider {
                             OkHttpUtil.get(OkHttpUtil.defaultClient(), "https://play.shcpin.com/xplay/555tZ4pvzHE3BpiO838.php", hashMap, new OKCallBack.OKCallBackString() {
                                 @Override
                                 protected void onFailure(Call call, Exception exc) {
-                   
+                                 }
 
                                 public void onResponse(String str) {
                                     try {
@@ -460,7 +460,7 @@ public class Voflix extends Spider {
                             result.put("playUrl", "");
 
                         }
-                       }
+                       
                     
                 
             
