@@ -419,10 +419,7 @@ public class Voflix extends Spider {
             Elements allScript = docc.select("script");
             JSONObject result = new JSONObject();
             
-            for (int i = 0; i < allScript.size(); i++) {
-                String scContent = allScript.get(i).html().trim();
-                if (scContent.startsWith("var player_")) {
-                    JSONObject player = new JSONObject(scContent.substring(scContent.indexOf('{'), scContent.lastIndexOf('}') + 1));
+            
                    if (playerConfig.has("duoduozy")) {
                         JSONObject pCfg = playerConfig.getJSONObject("duoduozy");
                        
@@ -471,7 +468,7 @@ public class Voflix extends Spider {
 
                         }
                     }
-                }
+                
             }
             return result.toString();
         } catch (Exception e) {
