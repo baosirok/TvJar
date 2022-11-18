@@ -414,14 +414,25 @@ public class Voflix extends Spider {
             headers.put("Accept", " text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
             headers.put("Accept-Language", " zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6");
             headers.put("Accept-Encoding", " gzip, deflate");
-            String url = "https://play.shtpin.com/xplay/?url=" + "pRoo00oE5lRo000oo000oijkVkkVIx56G4lvcm6r3SRSHdjeFIJDvkntAK9mWAFvrpjJyaE7Kf3WuSxboo00odBSizl56V7EyAKKsek0dd1tcyRRxFjbOI7yqu8Op0GvjnNaSLqcxGMR6k3I";
-                        Document doc = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url)));
-                        Elements script = doc.select("body>script");
+            String url = siteUrl + "/play/" + id + ".html";
+            Document doc = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url)));
+Elements allScript = doc.select("script");
             JSONObject result = new JSONObject();
-            
-                        
-                        for (int j = 0; j < script.size(); j++) {
-                            String Content = script.get(j).html().trim();
+            for (int i = 0; i < allScript.size(); i++) {
+                String scContent = allScript.get(i).html().trim();
+                if (scContent.startsWith("var player_")) { // 取直链
+                    int start = scContent.indexOf('{');
+                    int end = scContent.lastIndexOf('}') + 1;
+                    String json = scContent.substring(start, end);
+                    JSONObject player = new JSONObject(json);
+                    if (playerConfig.has(player.getString("from"))) {
+                        JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
+                             if (player.getString("from").contains("duoduozy")) {
+                            String videoUrl = pCfg.getString("parse") + player.getString("url");
+                            Document docs = Jsoup.parse(OkHttpUtil.string(videoUrl, Headers(videoUrl)));
+                        Elements allScripts = docs.select("body script");
+                        for (int j = 0; j < allScripts.size(); j++) {
+                            String Content = allScripts.get(j).html().trim();
                             Matcher matcher = urlt.matcher(Content);
                             if (!matcher.find()) {
                                 return "";
@@ -437,18 +448,19 @@ public class Voflix extends Spider {
                                 return "";
                             }
                             String vkey = matcher2.group(1);
-                            HashMap hashMap = new HashMap();
-                            hashMap.put("token", token);
-                            hashMap.put("url", urlt);
-                            hashMap.put("vkey", vkey);
-                            hashMap.put("sign", "F4penExTGogdt6U8");
-                            
+                            String tUrl = "https://play.shcpin.com/xplay/555tZ4pvzHE3BpiO838.php?" +"url=" + urlt + "&vkey=" + vkey + "&token" + token +"&sign=F4penExTGogdt6U8";
+                            JSONObject zurl = new JSONObject(OkHttpUtil.string(tUrl, getHeaders(tUrl)));
+                            String zurls = new String(Base64.decode(zurl.getString("url").substring(8).getBytes(), 0));
+                            result.put("url", zurls.substring(8, url.length() - 8));
                             result.put("header", headers.toString());
                             result.put("parse", 0);
                             result.put("playUrl", "");
 
                         }
-                       
+                       }
+                      }
+                     }
+                    }
                     
                 
             
