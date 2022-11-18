@@ -428,19 +428,19 @@ public class Voflix extends Spider {
                     int end = scContent.lastIndexOf('}') + 1;
                     String json = scContent.substring(start, end);
                     JSONObject player = new JSONObject(json);
-                    System.out.println("pla" + player);
+                    //System.out.println("pla" + player);
                     if (playerConfig.has(player.getString("from"))) {
                         JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
                         //System.out.println("pc" + pCfg);
                         String videoUrl = player.getString("url");
                         String playUrl = pCfg.getString("parse");
                         String show = pCfg.getString("show");
-                        if (1) {
+                        if (show == "VOFLIX") {
                        String jxurl = "https://play.shtpin.com/xplay/?url=" + videoUrl;
                        //System.out.println("jx" + jxurl);
-                       HashMap<String, String> headers = new HashMap<>();
+                       HashMap<String, String> headerss = new HashMap<>();
                             headers.put("referer", siteUrl);
-                       Document doc = Jsoup.parse(OkHttpUtil.string(jxurl,headers));
+                       Document doc = Jsoup.parse(OkHttpUtil.string(jxurl,headerss));
                        //System.out.println("zh" + doc);
                         Elements script = doc.select("body>script");
                         for (int j = 0; j < script.size(); j++) {
