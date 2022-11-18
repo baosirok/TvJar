@@ -29,7 +29,6 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import okhttp3.Call;
 
 
 /**
@@ -414,16 +413,12 @@ public class Voflix extends Spider {
             headers.put("Accept", " text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
             headers.put("Accept-Language", " zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6");
             headers.put("Accept-Encoding", " gzip, deflate");
-            
+            String url = "https://play.shtpin.com/xplay/?url=" + "pRoo00oE5lRo000oo000oijkVkkVIx56G4lvcm6r3SRSHdjeFIJDvkntAK9mWAFvrpjJyaE7Kf3WuSxboo00odBSizl56V7EyAKKsek0dd1tcyRRxFjbOI7yqu8Op0GvjnNaSLqcxGMR6k3I";
+                        Document doc = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url)));
+                        Elements script = doc.select("body>script");
             JSONObject result = new JSONObject();
             
-
-                   
-                        JSONObject pCfg = playerConfig.getJSONObject("duoduozy");
-                       
-                        String jxurl = "https://play.shtpin.com/xplay/?url=" + "pRoo00oE5lRo000oo000oijkVkkVIx56G4lvcm6r3SRSHdjeFIJDvkntAK9mWAFvrpjJyaE7Kf3WuSxboo00odBSizl56V7EyAKKsek0dd1tcyRRxFjbOI7yqu8Op0GvjnNaSLqcxGMR6k3I";
-                        Document doc = Jsoup.parse(OkHttpUtil.string(jxurl, getHeaders(jxurl)));
-                        Elements script = doc.select("body>script");
+                        
                         for (int j = 0; j < script.size(); j++) {
                             String Content = script.get(j).html().trim();
                             Matcher matcher = urlt.matcher(Content);
@@ -449,7 +444,7 @@ public class Voflix extends Spider {
                             OkHttpUtil.get(OkHttpUtil.defaultClient(), "https://play.shcpin.com/xplay/555tZ4pvzHE3BpiO838.php", hashMap, new OKCallBack.OKCallBackString() {
                                 @Override
                                 protected void onFailure(Call call, Exception exc) {
-                                }
+                   
 
                                 public void onResponse(String str) {
                                     try {
