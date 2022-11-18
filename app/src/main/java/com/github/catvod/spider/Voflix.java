@@ -414,9 +414,7 @@ public class Voflix extends Spider {
             headers.put("Accept", " text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
             headers.put("Accept-Language", " zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6");
             headers.put("Accept-Encoding", " gzip, deflate");
-            String url = siteUrl + "/play/" + id + ".html";            
-            Document docc = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url)));
-            Elements allScript = docc.select("script");
+            
             JSONObject result = new JSONObject();
             
 
