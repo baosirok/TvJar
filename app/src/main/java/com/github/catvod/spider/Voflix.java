@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import okhttp3.Call;
+
 
 
 
@@ -442,20 +442,7 @@ public class Voflix extends Spider {
                             hashMap.put("url", urlt);
                             hashMap.put("vkey", vkey);
                             hashMap.put("sign", "F4penExTGogdt6U8");
-                            OkHttpUtil.get(OkHttpUtil.defaultClient(), "https://play.shcpin.com/xplay/555tZ4pvzHE3BpiO838.php", hashMap, new OKCallBack.OKCallBackString() {
-                                @Override
-                                protected void onFailure(Call call, Exception exc) {
-                                 }
-
-                                public void onResponse(String str) {
-                                    try {
-                                        String url = new String(Base64.decode(new JSONObject(str).getString("url").substring(8).getBytes(), 0));
-                                        result.put("url", url.substring(8, url.length() - 8));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
+                            
                             result.put("header", headers.toString());
                             result.put("parse", 0);
                             result.put("playUrl", "");
