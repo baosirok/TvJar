@@ -414,56 +414,87 @@ public class Voflix extends Spider {
             headers.put("Accept", " text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
             headers.put("Accept-Language", " zh-CN,zh;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6");
             headers.put("Accept-Encoding", " gzip, deflate");
+            
+            
+            // 播放页 url
             String url = siteUrl + "/play/" + id + ".html";
-            Document doc = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url)));
-Elements allScript = doc.select("script");
+            Elements allScript = Jsoup.parse(OkHttpUtil.string(url, getHeaders(url))).select("script");
             JSONObject result = new JSONObject();
             for (int i = 0; i < allScript.size(); i++) {
                 String scContent = allScript.get(i).html().trim();
-                if (scContent.startsWith("var player_")) { // 取直链
+                if (scContent.startsWith("var player_aaaa")) { // 取直链
                     int start = scContent.indexOf('{');
                     int end = scContent.lastIndexOf('}') + 1;
                     String json = scContent.substring(start, end);
                     JSONObject player = new JSONObject(json);
+                    System.out.println("pla" + player);
                     if (playerConfig.has(player.getString("from"))) {
                         JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
-                             if (player.getString("from").contains("duoduozy")) {
-                            String videoUrl = pCfg.getString("parse") + player.getString("url");
-                            Document docs = Jsoup.parse(OkHttpUtil.string(videoUrl, getHeaders(videoUrl)));
-                        Elements allScripts = docs.select("body script");
-                        for (int j = 0; j < allScripts.size(); j++) {
-                            String Content = allScripts.get(j).html().trim();
-                            Matcher matcher = urlt.matcher(Content);
-                            if (!matcher.find()) {
-                                return "";
-                            }
-                            String urlt = matcher.group(1);
-                            Matcher matcher1 = token.matcher(Content);
-                            if (!matcher1.find()) {
-                                return "";
-                            }
-                            String token = matcher1.group(1);
-                            Matcher matcher2 = vkey.matcher(Content);
-                            if (!matcher2.find()) {
-                                return "";
-                            }
-                            String vkey = matcher2.group(1);
-                            String tUrl = "https://play.shcpin.com/xplay/555tZ4pvzHE3BpiO838.php?" +"url=" + urlt + "&vkey=" + vkey + "&token" + token +"&sign=F4penExTGogdt6U8";
-                            JSONObject zurl = new JSONObject(OkHttpUtil.string(tUrl, getHeaders(tUrl)));
-                            String zurls = new String(Base64.decode(zurl.getString("url").substring(8).getBytes(), 0));
-                            result.put("url", zurls.substring(8, url.length() - 8));
-                            result.put("header", headers.toString());
+                        //System.out.println("pc" + pCfg);
+                        String videoUrl = player.getString("url");
+                        String playUrl = pCfg.getString("parse");
+                        String show = pCfg.getString("show");
+                        if (1) {
+                       String jxurl = "https://play.shtpin.com/xplay/?url=" + videoUrl;
+                       //System.out.println("jx" + jxurl);
+                       HashMap<String, String> headers = new HashMap<>();
+                            headers.put("referer", siteUrl);
+                       Document doc = Jsoup.parse(OkHttpUtil.string(jxurl,headers));
+                       //System.out.println("zh" + doc);
+                        Elements script = doc.select("body>script");
+                        for (int j = 0; j < script.size(); j++) {
+                          String content = script.get(j).html().trim();
+                        if (content.contains("var config =")){
+                            Matcher matcher1 = urlt.matcher(content);
+                            if (!matcher1.find())
+                                continue;
+                            Matcher matcher2 = token.matcher(content);
+                            if (!matcher2.find())
+                                continue;
+                            Matcher matcher3 = vkey.matcher(content);
+                            if (!matcher3.find())
+                                continue;
+                            String video_url = matcher1.group(1);
+                            String video_token = matcher2.group(1);
+                            String video_key = matcher3.group(1);                          
+                            String video_sign= "F4penExTGogdt6U8" ;
+                            String video_tm = String.valueOf(System.currentTimeMillis()/ 1000);
+                            HashMap hashMap = new HashMap();
+                            hashMap.put("token", video_token);
+                            hashMap.put("tm", video_tm);
+                            hashMap.put("url", video_url);
+                            hashMap.put("vkey", video_key);
+                             hashMap.put("sign", video_sign);
+                            OkHttpUtil.get(OkHttpUtil.defaultClient(), "https://play.shtpin.com/xplay/555tZ4pvzHE3BpiO838.php", hashMap, new OKCallBack.OKCallBackString() {
+                                @Override
+                                protected void onFailure(Call call, Exception exc) {
+                                }
+
+                            public void onResponse(String str) {
+                            try {
+                                        String url = new String(Base64.decode(new JSONObject(str).getString("url").substring(8).getBytes(), Base64.DEFAULT));
+                                        result.put("url", url.substring(8, url.length() - 8));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                          }
+                          }
+                        //    result.put("header", headers.toString());
                             result.put("parse", 0);
                             result.put("playUrl", "");
-
-                        }
-                       }
-                      }
-                     }
-                    }
-                    
-                
-            
+                        } else {
+                            if (videoUrl.contains(".m3u8")) {
+                                result.put("parse", 0);
+                                result.put("playUrl", "");
+                                result.put("url", videoUrl);
+                             //   result.put("header", headers.toString());
+                    }    
+                  }
+                 } 
+              }  
+            }
             return result.toString();
         } catch (Exception e) {
             SpiderDebug.log(e);
