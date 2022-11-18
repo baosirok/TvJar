@@ -429,7 +429,7 @@ Elements allScript = doc.select("script");
                         JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
                              if (player.getString("from").contains("duoduozy")) {
                             String videoUrl = pCfg.getString("parse") + player.getString("url");
-                            Document docs = Jsoup.parse(OkHttpUtil.string(videoUrl, Headers(videoUrl)));
+                            Document docs = Jsoup.parse(OkHttpUtil.string(videoUrl, getHeaders(videoUrl)));
                         Elements allScripts = docs.select("body script");
                         for (int j = 0; j < allScripts.size(); j++) {
                             String Content = allScripts.get(j).html().trim();
